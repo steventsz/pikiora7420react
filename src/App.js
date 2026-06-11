@@ -1,6 +1,10 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router";
 import Navigation from "./components/Navigation";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Appointments from "./components/Appointments";
+import AdminDashboard from "./components/AdminDashboard";
 
 function Home() {
     return (
@@ -29,15 +33,6 @@ function Slots() {
     );
 }
 
-function Login() {
-    return (
-        <div>
-            <h1>Login</h1>
-            <p>Login form will be added here.</p>
-        </div>
-    );
-}
-
 function App() {
     return (
         <div className="App">
@@ -48,6 +43,9 @@ function App() {
                     <Route path="/doctors" element={<Doctors/>}/>
                     <Route path="/slots" element={<Slots/>}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/appointments" element={<Appointments/>}/>
+                    <Route path="/admin" element={<AdminDashboard/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
