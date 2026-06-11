@@ -12,6 +12,11 @@ function Slots(props) {
     const [isAvailable, setIsAvailable] = useState("true");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [bookingSlotId, setBookingSlotId] = useState("");
+    const [notes, setNotes] = useState("");
+    const [bookingLoading, setBookingLoading] = useState(false);
+    const [bookingError, setBookingError] = useState("");
+    const [bookingSuccess, setBookingSuccess] = useState("");
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -94,6 +99,97 @@ function Slots(props) {
         setIsAvailable("true");
     }
 
+    function startBooking(slotId) {
+        setBookingSlotId(slotId);
+        setNotes("");
+        setBookingError("");
+        setBookingSuccess("");
+    }
+
+    function cancelBookingForm() {
+        setBookingSlotId("");
+        setNotes("");
+        setBookingError("");
+    }
+
+    function notesHandler(e) {
+        setNotes(e.target.value);
+    }
+
+    function getAppointmentError(error) {
+        if (error.response && error.response.data) {
+            if (error.response.data.detail) {
+                return error.response.data.detail;
+            }
+
+            if (error.response.data.slot) {
+                return "This slot is no longer available.";
+            }
+
+            if (error.response.data.non_field_errors) {
+                return error.response.data.non_field_errors.join(" ");
+            }
+        }
+
+        if (error.request) {
+            return "Backend server is not running. Please start Django on port 8000.";
+        }
+
+        return "Could not book this appointment. Please try again.";
+    }
+
+    function bookAppointment(slot) {
+        if (!token) {
+            window.location.href = "/login";
+            return;
+        }
+
+        setBookingLoading(true);
+        setBookingError("");
+        setBookingSuccess("");
+
+        let data = JSON.stringify({
+            "slot": slot.id,
+            "notes": notes
+        });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: base_url + "/appointments/",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + token
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                setBookingSlotId("");
+                setNotes("");
+                setBookingSuccess("Appointment booked successfully.");
+
+                if (isAvailable === "true") {
+                    setSlots(slots.filter((slotItem) => slotItem.id !== slot.id));
+                } else {
+                    setSlots(slots.map((slotItem) => {
+                        if (slotItem.id === slot.id) {
+                            return {...slotItem, is_available: false};
+                        }
+
+                        return slotItem;
+                    }));
+                }
+            })
+            .catch((error) => {
+                setBookingError(getAppointmentError(error));
+            })
+            .finally(() => {
+                setBookingLoading(false);
+            });
+    }
+
     return (
         <Container>
             <h1>Appointment Slots</h1>
@@ -106,6 +202,7 @@ function Slots(props) {
             }
 
             {error && <Alert variant="danger">{error}</Alert>}
+            {bookingSuccess && <Alert variant="success">{bookingSuccess}</Alert>}
 
             <Card className="mb-4 text-start">
                 <Card.Body>
@@ -166,9 +263,41 @@ function Slots(props) {
                                             </Card.Text>
                                         }
                                         {slot.is_available && token &&
-                                            <Button variant="primary" disabled>
-                                                Booking will be added in the next module
-                                            </Button>
+                                            <>
+                                                {bookingSlotId === slot.id ?
+                                                    <Form className="mt-3">
+                                                        {bookingError && <Alert variant="danger">{bookingError}</Alert>}
+                                                        <Form.Group className="mb-3">
+                                                            <Form.Label>Notes</Form.Label>
+                                                            <Form.Control
+                                                                as="textarea"
+                                                                rows={3}
+                                                                value={notes}
+                                                                onChange={notesHandler}
+                                                                placeholder="Optional notes for this appointment"
+                                                            />
+                                                        </Form.Group>
+                                                        <Button
+                                                            variant="primary"
+                                                            className="me-2"
+                                                            onClick={() => bookAppointment(slot)}
+                                                            disabled={bookingLoading}
+                                                        >
+                                                            {bookingLoading ? "Booking..." : "Confirm Booking"}
+                                                        </Button>
+                                                        <Button
+                                                            variant="outline-secondary"
+                                                            onClick={cancelBookingForm}
+                                                            disabled={bookingLoading}
+                                                        >
+                                                            Cancel
+                                                        </Button>
+                                                    </Form> :
+                                                    <Button variant="primary" onClick={() => startBooking(slot.id)}>
+                                                        Book
+                                                    </Button>
+                                                }
+                                            </>
                                         }
                                     </Card.Body>
                                 </Card>
