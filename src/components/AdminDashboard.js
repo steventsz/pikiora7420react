@@ -4,6 +4,7 @@ import base_url from "../constraints";
 import {Container, Tab, Tabs} from "react-bootstrap";
 import AdminDoctors from "./AdminDoctors";
 import AdminSlots from "./AdminSlots";
+import AdminAppointments from "./AdminAppointments";
 
 function AdminDashboard(props) {
     const [user, setUser] = useState(null);
@@ -58,7 +59,7 @@ function AdminDashboard(props) {
                         </Tab>
                         <Tab eventKey="appointments" title="Appointments">
                             <h2>Appointments</h2>
-                            <p>Appointment management will be added here.</p>
+                            <AdminAppointments/>
                         </Tab>
                         <Tab eventKey="users" title="Users">
                             <h2>Users</h2>
