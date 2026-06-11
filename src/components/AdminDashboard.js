@@ -3,6 +3,7 @@ import axios from "axios";
 import base_url from "../constraints";
 import {Container, Tab, Tabs} from "react-bootstrap";
 import AdminDoctors from "./AdminDoctors";
+import AdminSlots from "./AdminSlots";
 
 function AdminDashboard(props) {
     const [user, setUser] = useState(null);
@@ -53,7 +54,7 @@ function AdminDashboard(props) {
                         </Tab>
                         <Tab eventKey="slots" title="Slots">
                             <h2>Slots</h2>
-                            <p>Appointment slot management will be added here.</p>
+                            <AdminSlots/>
                         </Tab>
                         <Tab eventKey="appointments" title="Appointments">
                             <h2>Appointments</h2>
