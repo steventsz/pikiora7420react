@@ -5,6 +5,7 @@ import {Container, Tab, Tabs} from "react-bootstrap";
 import AdminDoctors from "./AdminDoctors";
 import AdminSlots from "./AdminSlots";
 import AdminAppointments from "./AdminAppointments";
+import AdminUsers from "./AdminUsers";
 
 function AdminDashboard(props) {
     const [user, setUser] = useState(null);
@@ -63,7 +64,7 @@ function AdminDashboard(props) {
                         </Tab>
                         <Tab eventKey="users" title="Users">
                             <h2>Users</h2>
-                            <p>User management will be added here.</p>
+                            <AdminUsers/>
                         </Tab>
                     </Tabs>
                 </div>
