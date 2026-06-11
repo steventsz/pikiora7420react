@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import base_url from "../constraints";
 import {Container, Tab, Tabs} from "react-bootstrap";
+import AdminDoctors from "./AdminDoctors";
 
 function AdminDashboard(props) {
     const [user, setUser] = useState(null);
@@ -48,7 +49,7 @@ function AdminDashboard(props) {
                     <Tabs defaultActiveKey="doctors" className="mb-3">
                         <Tab eventKey="doctors" title="Doctors">
                             <h2>Doctors</h2>
-                            <p>Doctor management will be added here.</p>
+                            <AdminDoctors/>
                         </Tab>
                         <Tab eventKey="slots" title="Slots">
                             <h2>Slots</h2>
