@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import base_url from "../constraints";
+import {Container, Tab, Tabs} from "react-bootstrap";
 
 function AdminDashboard(props) {
     const [user, setUser] = useState(null);
@@ -37,11 +38,34 @@ function AdminDashboard(props) {
     }, []);
 
     return (
-        <div>
+        <Container>
             <h1>Admin Dashboard</h1>
             {error && <p>{error}</p>}
-            {user && <p>Welcome, {user.username}. Admin tools will be added here.</p>}
-        </div>
+            {user &&
+                <div>
+                    <p>Welcome, {user.username}. Choose a section to manage.</p>
+
+                    <Tabs defaultActiveKey="doctors" className="mb-3">
+                        <Tab eventKey="doctors" title="Doctors">
+                            <h2>Doctors</h2>
+                            <p>Doctor management will be added here.</p>
+                        </Tab>
+                        <Tab eventKey="slots" title="Slots">
+                            <h2>Slots</h2>
+                            <p>Appointment slot management will be added here.</p>
+                        </Tab>
+                        <Tab eventKey="appointments" title="Appointments">
+                            <h2>Appointments</h2>
+                            <p>Appointment management will be added here.</p>
+                        </Tab>
+                        <Tab eventKey="users" title="Users">
+                            <h2>Users</h2>
+                            <p>User management will be added here.</p>
+                        </Tab>
+                    </Tabs>
+                </div>
+            }
+        </Container>
     );
 }
 
