@@ -1,5 +1,6 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router";
+import {Container} from "react-bootstrap";
 import Navigation from "./components/Navigation";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -10,10 +11,15 @@ import Slots from "./components/Slots";
 
 function Home() {
     return (
-        <div>
-            <h1>Piki Ora 7420</h1>
-            <p>Welcome to the Piki Ora appointment booking frontend.</p>
-        </div>
+        <Container>
+            <h1>Piki Ora Clinic</h1>
+            <p className="page-intro">
+                Piki Ora Clinic is a professional community healthcare clinic founded in 2018 and located in
+                Auckland, New Zealand. The clinic focuses on patient-centred care, friendly service, and reliable
+                appointment support for everyday health needs. Patients can browse doctors, view available
+                appointment slots, and manage their bookings online.
+            </p>
+        </Container>
     );
 }
 

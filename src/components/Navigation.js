@@ -52,7 +52,7 @@ function Navigation(props) {
     return (
         <Navbar bg="light" expand="lg" className="mb-4">
             <Container>
-                <Navbar.Brand as={Link} to="/">Piki Ora 7420</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">Piki Ora Clinic</Navbar.Brand>
                 <Navbar.Toggle aria-controls="main-navigation"/>
                 <Navbar.Collapse id="main-navigation">
                     <Nav className="me-auto">
