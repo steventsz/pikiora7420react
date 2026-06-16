@@ -1,70 +1,169 @@
-# Getting Started with Create React App
+# Piki Ora Clinic React Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the React.js frontend for the Piki Ora Clinic appointment booking project. It connects to the Django REST Framework backend and provides public pages for browsing doctors and appointment slots, patient pages for booking and managing appointments, and a React-based administrator dashboard.
 
-## Available Scripts
+## Project Links
 
-In the project directory, you can run:
+- Django REST Framework repository: https://github.com/steventsz/PikiOra7420drf
+- React.js repository: https://github.com/steventsz/pikiora7420react
+- Django REST Framework Vercel deployment: https://piki-ora7420drf.vercel.app/
+- React.js Vercel deployment: https://pikiora7420react.vercel.app/
 
-### `npm start`
+## Demo Admin Login
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Use the following default administrator account for testing the admin dashboard:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```text
+username: admin
+password: admin
+```
 
-### `npm test`
+## Technology Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React with JavaScript
+- Create React App with `react-scripts`
+- React Router using `BrowserRouter`, `Routes`, and `Route`
+- Bootstrap and React-Bootstrap
+- Axios for API requests
+- Browser `localStorage` for simple token persistence
 
-### `npm run build`
+## Main Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Public users can:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- View the home page for Piki Ora Clinic.
+- Browse the doctor list.
+- Browse appointment slots.
+- Filter appointment slots by doctor, date, and availability.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Registered patients can:
 
-### `npm run eject`
+- Register a new patient account.
+- Log in and store their token locally.
+- Book an available appointment slot.
+- View their own appointments.
+- Cancel or delete appointments where allowed.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Administrator users can:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Access the React admin dashboard.
+- Manage doctors.
+- Manage appointment slots.
+- Manage appointments.
+- Manage users.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Frontend Routes
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The main routes are defined in `src/App.js`.
 
-## Learn More
+| Route | Purpose |
+| --- | --- |
+| `/` | Home page |
+| `/doctors` | Public doctor list |
+| `/slots` | Public appointment slot list and booking page |
+| `/login` | Login page |
+| `/register` | Patient registration page |
+| `/appointments` | Patient appointment management page |
+| `/admin` | React administrator dashboard |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Backend API
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The frontend sends requests to the Django REST Framework API. The default local API base URL is configured in `src/constraints.js`:
 
-### Code Splitting
+```text
+http://127.0.0.1:8000/api
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+For deployment or another backend URL, create a `.env` file in the frontend project and set:
 
-### Analyzing the Bundle Size
+```text
+REACT_APP_API_BASE_URL=https://piki-ora7420drf.vercel.app/api
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+After changing environment variables, restart the React development server.
 
-### Making a Progressive Web App
+## Local Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Install the frontend dependencies:
 
-### Advanced Configuration
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Start the React development server:
 
-### Deployment
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The app will run at:
 
-### `npm run build` fails to minify
+```text
+http://localhost:3000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For full functionality, start the Django REST Framework backend as well. The local backend should be available at:
+
+```text
+http://127.0.0.1:8000/api
+```
+
+## Useful Scripts
+
+Run the development server:
+
+```bash
+npm start
+```
+
+Run tests:
+
+```bash
+npm test
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```text
+src/
+  App.js                  Main route definitions
+  constraints.js          Shared API base URL
+  components/
+    Navigation.js         Main navigation bar and logout logic
+    Login.js              User login form
+    Register.js           Patient registration form
+    Doctors.js            Public doctor list
+    Slots.js              Slot browsing and appointment booking
+    Appointments.js       Patient appointment management
+    AdminDashboard.js     Admin dashboard tabs
+    AdminDoctors.js       Doctor management
+    AdminSlots.js         Slot management
+    AdminAppointments.js  Appointment management
+    AdminUsers.js         User management
+```
+
+## Authentication Pattern
+
+After login or registration, the backend returns a token and user details. The frontend stores them in `localStorage`.
+
+Authenticated API requests use the token in this format:
+
+```js
+headers: {
+  Authorization: 'Token ' + token,
+}
+```
+
+The navigation bar checks the current user with `/auth/me/`. If `user.is_staff === true`, the admin dashboard link is shown. Otherwise, authenticated users see the patient appointment page.
+
+## Notes for Deployment
+
+The deployed React app should use the deployed backend API URL through `REACT_APP_API_BASE_URL`. This keeps the backend URL in one shared place instead of hardcoding it in every component.
+
+The assignment administrator dashboard is implemented in React at `/admin`. It is separate from Django's built-in `/admin/` site.
